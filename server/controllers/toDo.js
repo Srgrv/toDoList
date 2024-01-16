@@ -42,3 +42,27 @@ export const getInProgressTodos = async (req, res) => {
     });
   }
 };
+
+export const getPendingTodos = async (req, res) => {
+  try {
+    const todos = await toDo
+      .find({ status: "ожидает выполнения" })
+      .sort("-createdAt");
+
+    if (!todos) {
+      return res.json({
+        message: "Нет задач, находящиеся в ожидании выполнения",
+      });
+    }
+
+    res.json({
+      todos,
+    });
+  } catch (error) {
+    res.json({
+      error,
+      message:
+        "Что-то пошло не так с получением задач, находящийхся в ожидании выполнения",
+    });
+  }
+};
