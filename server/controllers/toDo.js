@@ -1,6 +1,6 @@
 import toDo from "../models/toDo.js";
 
-const getTodos = async (req, res) => {
+const getCompletedTodos = async (req, res) => {
   try {
     const todos = await toDo.find({ status: "выполнено" }).sort("-createdAt");
 
