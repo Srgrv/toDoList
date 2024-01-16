@@ -12,7 +12,8 @@ const toDoSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      default: "",
+      enum: ["выполнен", "в процессе", "ожидает выполнения"],
+      default: "ожидает выполнения",
     },
   },
   {
