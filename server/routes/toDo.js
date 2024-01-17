@@ -5,17 +5,17 @@ import {
   getCompletedTodos,
   getInProgressTodos,
   getPendingTodos,
+  createToDo,
 } from "../controllers/toDo.js";
 
 const router = new Router();
 
-//getCompletedTodos
+//get
 router.get("/getCompletedTodos", getCompletedTodos);
-
-//getInProgressTodos
 router.get("/getInProgressTodos", getInProgressTodos);
-
-//getPendingTodos
 router.get("/getPendingTodos", getPendingTodos);
+router.post("/createToDo", createToDo);
+
+//create
 
 export default router;
