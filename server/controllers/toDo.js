@@ -1,5 +1,17 @@
 import toDo from "../models/toDo.js";
 
+export const createToDo = async (req, res) => {
+  const { title, description } = req.body;
+
+  const newToDo = new toDo({
+    title,
+    description,
+  });
+
+  await newToDo.save();
+  res.json({ newToDo, message: "Задача была добавлена" });
+};
+
 export const getCompletedTodos = async (req, res) => {
   try {
     const todos = await toDo.find({ status: "выполнено" }).sort("-createdAt");
