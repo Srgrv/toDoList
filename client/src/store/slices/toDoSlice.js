@@ -5,7 +5,9 @@ export const getPendingTodos = createAsyncThunk(
   "toDo/getPendingTodos",
   async () => {
     try {
-      const { data } = await axios.get("/todos/getPendingTodos");
+      const { data } = await axios.get(
+        "https://mern-todo-1huw.onrender.com/todos/getPendingTodos"
+      );
       return data;
     } catch (error) {
       console.log(
@@ -19,7 +21,9 @@ export const GET_COMPLETED_TODOS = createAsyncThunk(
   "toDo/GET_COMPLETED_TODOS",
   async () => {
     try {
-      const { data } = await axios.get("/todos/getCompletedTodos");
+      const { data } = await axios.get(
+        "https://mern-todo-1huw.onrender.com/todos/getCompletedTodos"
+      );
       return data;
     } catch (error) {
       console.log(
@@ -33,10 +37,13 @@ export const createTodo = createAsyncThunk(
   "toDo/createTodo",
   async ({ title, description }) => {
     try {
-      const { data } = await axios.post("/todos/createToDo", {
-        title,
-        description,
-      });
+      const { data } = await axios.post(
+        "https://mern-todo-1huw.onrender.com/todos/createToDo",
+        {
+          title,
+          description,
+        }
+      );
       return data;
     } catch (error) {
       console.log(`Произошла ошибка при создании задачи`);
@@ -49,11 +56,14 @@ export const UPDATE_TODO = createAsyncThunk(
   async ({ titleInput, descriptionInput, todoId }) => {
     debugger;
     try {
-      const { data } = await axios.put("/todos/updateTodo", {
-        titleInput,
-        descriptionInput,
-        todoId,
-      });
+      const { data } = await axios.put(
+        "https://mern-todo-1huw.onrender.com/todos/updateTodo",
+        {
+          titleInput,
+          descriptionInput,
+          todoId,
+        }
+      );
       return data;
     } catch (error) {
       console.log(`Произошла ошибка при обновлении задачи`);
@@ -65,7 +75,9 @@ export const REMOVE_TODO = createAsyncThunk(
   "toDo/REMOVE_TODO",
   async (todoId) => {
     try {
-      const { data } = await axios.delete(`/todos/removeTodo/${todoId}`);
+      const { data } = await axios.delete(
+        `https://mern-todo-1huw.onrender.com/todos/removeTodo/${todoId}`
+      );
       return data;
     } catch (error) {
       console.log(`Произошла ошибка при запросе на удаление: ${error}`);
@@ -77,7 +89,10 @@ export const COMPLETE_TODO = createAsyncThunk(
   "toDo/COMPLETE_TODO",
   async (todoId) => {
     try {
-      const { data } = await axios.put("/todos/completeTodo", { todoId });
+      const { data } = await axios.put(
+        "https://mern-todo-1huw.onrender.com/todos/completeTodo",
+        { todoId }
+      );
       return data;
     } catch (error) {
       console.log(`Произошла ошибка при завершении задачи: ${error}`);
@@ -89,7 +104,10 @@ export const INCOMPLETE_TODO = createAsyncThunk(
   "toDo/INCOMPLETE_TODO",
   async (todoId) => {
     try {
-      const { data } = await axios.put("/todos/incompleteTodo", { todoId });
+      const { data } = await axios.put(
+        "https://mern-todo-1huw.onrender.com/todos/incompleteTodo",
+        { todoId }
+      );
       return data;
     } catch (error) {
       console.log(
