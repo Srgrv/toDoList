@@ -1,0 +1,31 @@
+.todoListItem {
+  padding: 10px;
+  box-shadow: 0px 2px 4px rgb(39, 38, 38);
+  background-color: #414040;
+  margin-bottom: 10px;
+}
+
+.todoListItem_wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.todo {
+  width: 100%;
+  padding-left: 20px;
+}
+
+.todoListItem_wrapper h3 {
+  font-size: 25px;
+  color: rgb(0, 230, 122);
+  font-weight: bold;
+  margin: 0px;
+}
+
+.todoListItem_wrapper p {
+  margin-top: 8px;
+  font-size: 14px;
+  color: rgb(179, 178, 178);
+  text-align: justify;
+}
