@@ -54,6 +54,7 @@ const List = () => {
           <input
             type="text"
             value={title}
+            required
             onChange={(e) => setTitle(e.target.value)}
             placeholder="What's the title of your To Do?"
           />
@@ -62,6 +63,7 @@ const List = () => {
           <label>Description:</label>
           <input
             type="text"
+            required
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="What's the description of your To Do?"
