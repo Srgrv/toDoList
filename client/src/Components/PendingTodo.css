@@ -1,0 +1,39 @@
+.pendingTodo-enter {
+  opacity: 0;
+  transform: translateX(-600px);
+}
+.pendingTodo-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 700ms, transform 700ms;
+}
+.pendingTodo-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+.pendingTodo-exit-active {
+  opacity: 0;
+  /* transform: scale(0.9); */
+  transform: translateX(600px);
+  transition: opacity 300ms, transform 700ms;
+}
+
+.editForm-enter {
+  opacity: 0;
+  transform: translateX(600px);
+}
+.editForm-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 700ms, transform 700ms;
+}
+.editForm-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+.editForm-exit-active {
+  opacity: 0;
+  /* transform: scale(0.9); */
+  transform: translateX(-600px);
+  transition: opacity 300ms, transform 700ms;
+}
