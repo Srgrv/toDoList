@@ -2,6 +2,9 @@ import React, { useEffect, useMemo, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
+//hooks
+import { useMatchMedia } from "../../hooks/use-match-media";
+
 //css
 import "../PendingTodo.css";
 
@@ -14,6 +17,8 @@ import { getPendingTodos } from "../../store/slices/toDoSlice";
 import { SET_EDIT_TODO } from "../../store/slices/editTodoSlice";
 
 const ListOfPendingTodos = React.memo(() => {
+  const { isMobile, isPhone, isTablet, isLaptop, isDesktop } = useMatchMedia();
+
   const dispatch = useDispatch();
 
   const nodeRef = useRef(null);
@@ -25,7 +30,14 @@ const ListOfPendingTodos = React.memo(() => {
     dispatch(getPendingTodos());
   }, [dispatch]);
 
-  console.log("render List Of");
+  // console.log("render List Of");
+  {
+    isMobile && console.log(`isMobile: ${isMobile}`);
+    isPhone && console.log(`isPhone: ${isPhone}`);
+    isTablet && console.log(`isTablet: ${isTablet}`);
+    isLaptop && console.log(`isLaptop: ${isLaptop}`);
+    isDesktop && console.log(`isDesktop: ${isDesktop}`);
+  }
 
   return (
     <TransitionGroup component="div">
@@ -42,12 +54,12 @@ const ListOfPendingTodos = React.memo(() => {
               timeout={600}
               mountOnEnter
               unmountOnExit
-              onEnter={() => console.log("onEnter")}
-              onEntered={() => console.log("onEntered")}
-              onEntering={() => console.log("onEntering")}
-              onExit={() => console.log("onExit")}
-              onExited={() => console.log("onExited")}
-              onExiting={() => console.log("onExiting")}
+              // onEnter={() => console.log("onEnter")}
+              // onEntered={() => console.log("onEntered")}
+              // onEntering={() => console.log("onEntering")}
+              // onExit={() => console.log("onExit")}
+              // onExited={() => console.log("onExited")}
+              // onExiting={() => console.log("onExiting")}
             >
               <EditForm
                 key={item._id}
@@ -66,12 +78,12 @@ const ListOfPendingTodos = React.memo(() => {
               timeout={600}
               mountOnEnter
               unmountOnExit
-              onEnter={() => console.log("onEnter")}
-              onEntered={() => console.log("onEntered")}
-              onEntering={() => console.log("onEntering")}
-              onExit={() => console.log("onExit")}
-              onExited={() => console.log("onExited")}
-              onExiting={() => console.log("onExiting")}
+              // onEnter={() => console.log("onEnter")}
+              // onEntered={() => console.log("onEntered")}
+              // onEntering={() => console.log("onEntering")}
+              // onExit={() => console.log("onExit")}
+              // onExited={() => console.log("onExited")}
+              // onExiting={() => console.log("onExiting")}
             >
               <PendingTodo item={item} />
             </CSSTransition>
