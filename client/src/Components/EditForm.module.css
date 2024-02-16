@@ -1,0 +1,61 @@
+.todoInput {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgb(77, 77, 77);
+
+  margin-bottom: 25px;
+  box-shadow: 0px 2px 4px rgb(39, 38, 38);
+  background-color: #414040;
+  /* margin-bottom: 10px; */
+  padding: 10px;
+  padding-bottom: 25px;
+}
+
+.todoInputItem {
+  /* margin-right: 20px; */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.todoInputItem label {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.todoInputItem input {
+  border: none;
+  padding: 8px;
+  width: 230px;
+}
+
+.todoInputItem input:focus {
+  outline: 2px solid rgb(0, 230, 122);
+}
+
+.primaryBtn {
+  color: white;
+  border-radius: 0px;
+  border: none;
+  margin-top: 27px;
+  padding: 10px;
+  width: 70px;
+  cursor: pointer;
+}
+
+.addBtn {
+  background-color: rgb(0, 230, 122);
+}
+
+.addBtn:hover {
+  background-color: rgb(4, 192, 104);
+}
+
+.cancelBtn {
+  background-color: rgb(212, 105, 33);
+}
+
+.cancelBtn:hover {
+  background-color: rgb(179, 92, 34);
+}
