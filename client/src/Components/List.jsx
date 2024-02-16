@@ -35,9 +35,13 @@ const List = () => {
     // setTimeout(() => {
     //   setIsAddingTodo(true);
     // }, 400);
-    dispatch(createTodo({ title, description }));
-    setTitle("");
-    setDescription("");
+    if (title && description) {
+      dispatch(createTodo({ title, description }));
+      setTitle("");
+      setDescription("");
+    } else {
+      alert("Параметры title и description обязательно");
+    }
   };
 
   const toggleIsCompleteScreen = (boolean) => {
