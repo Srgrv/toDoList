@@ -1,6 +1,7 @@
 import express from "express"; // создание приложения
 import mongoose from "mongoose"; // подключение к базе данных
 import dotenv from "dotenv"; // шифрование в формате .env
+import cors from "cors";
 
 //routes
 import toDo from "./routes/toDo.js";
@@ -14,6 +15,7 @@ const DB_PASSWORD = process.env.DB_PASSWORD;
 const DB_NAME = process.env.DB_NAME;
 
 app.use(express.json());
+app.use(cors());
 
 //getRoutes
 app.use("/todos", toDo);
