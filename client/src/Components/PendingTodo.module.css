@@ -29,3 +29,13 @@
   color: rgb(179, 178, 178);
   text-align: justify;
 }
+
+@media screen and (max-width: 766px) {
+  .todo {
+    padding-left: 0px;
+  }
+
+  .todo h3 {
+    font-size: 20px;
+  }
+}
