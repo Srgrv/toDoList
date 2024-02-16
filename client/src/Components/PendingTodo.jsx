@@ -26,7 +26,7 @@ const PendingTodo = React.memo((props) => {
   const prevItem = useRef(props.item);
   const prevClassName = useRef(props.className);
 
-  console.log(`${props.item.title}`);
+  // console.log(`${props.item.title}`);
 
   useEffect(() => {
     if (prevItem.current.title !== props.item.title) {
