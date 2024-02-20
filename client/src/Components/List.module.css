@@ -16,7 +16,8 @@ h1 {
   margin-right: auto;
   margin-top: 3%;
   /* max-height: 80vh; */
-  overflow-y: auto;
+  height: fit-content;
+  overflow-y: hidden;
   box-shadow: 0px 5px 7px rgb(26, 25, 25);
 }
 

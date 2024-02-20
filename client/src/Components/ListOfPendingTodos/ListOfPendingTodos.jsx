@@ -7,6 +7,7 @@ import { useMatchMedia } from "../../hooks/use-match-media";
 
 //css
 import "../PendingTodo.css";
+import classes from "./ListOfPendingTodos.module.css";
 
 //components
 import EditForm from "../EditForm";
@@ -40,57 +41,59 @@ const ListOfPendingTodos = React.memo(() => {
   }
 
   return (
-    <TransitionGroup component="div">
-      {pendingTodos.map((item) => {
-        if (editTodo === item._id) {
-          return (
-            <CSSTransition
-              // classNames={"pendingTodo"}
-              classNames={"editForm"}
-              nodeRef={nodeRef}
-              in={Boolean(editTodo)}
-              // key={item._id}
-              key={editTodo}
-              timeout={600}
-              mountOnEnter
-              unmountOnExit
-              // onEnter={() => console.log("onEnter")}
-              // onEntered={() => console.log("onEntered")}
-              // onEntering={() => console.log("onEntering")}
-              // onExit={() => console.log("onExit")}
-              // onExited={() => console.log("onExited")}
-              // onExiting={() => console.log("onExiting")}
-            >
-              <EditForm
+    <div className={classes.wrapper}>
+      <TransitionGroup component="div">
+        {pendingTodos.map((item) => {
+          if (editTodo === item._id) {
+            return (
+              <CSSTransition
+                // classNames={"pendingTodo"}
+                classNames={"editForm"}
+                nodeRef={nodeRef}
+                in={Boolean(editTodo)}
+                // key={item._id}
+                key={editTodo}
+                timeout={600}
+                mountOnEnter
+                unmountOnExit
+                // onEnter={() => console.log("onEnter")}
+                // onEntered={() => console.log("onEntered")}
+                // onEntering={() => console.log("onEntering")}
+                // onExit={() => console.log("onExit")}
+                // onExited={() => console.log("onExited")}
+                // onExiting={() => console.log("onExiting")}
+              >
+                <EditForm
+                  key={item._id}
+                  cancel={() => dispatch(SET_EDIT_TODO(null))}
+                  todoId={item._id}
+                  title={item.title}
+                  description={item.description}
+                />
+              </CSSTransition>
+            );
+          } else {
+            return (
+              <CSSTransition
+                classNames={"pendingTodo"}
                 key={item._id}
-                cancel={() => dispatch(SET_EDIT_TODO(null))}
-                todoId={item._id}
-                title={item.title}
-                description={item.description}
-              />
-            </CSSTransition>
-          );
-        } else {
-          return (
-            <CSSTransition
-              classNames={"pendingTodo"}
-              key={item._id}
-              timeout={600}
-              mountOnEnter
-              unmountOnExit
-              // onEnter={() => console.log("onEnter")}
-              // onEntered={() => console.log("onEntered")}
-              // onEntering={() => console.log("onEntering")}
-              // onExit={() => console.log("onExit")}
-              // onExited={() => console.log("onExited")}
-              // onExiting={() => console.log("onExiting")}
-            >
-              <PendingTodo item={item} />
-            </CSSTransition>
-          );
-        }
-      })}
-    </TransitionGroup>
+                timeout={600}
+                mountOnEnter
+                unmountOnExit
+                // onEnter={() => console.log("onEnter")}
+                // onEntered={() => console.log("onEntered")}
+                // onEntering={() => console.log("onEntering")}
+                // onExit={() => console.log("onExit")}
+                // onExited={() => console.log("onExited")}
+                // onExiting={() => console.log("onExiting")}
+              >
+                <PendingTodo item={item} />
+              </CSSTransition>
+            );
+          }
+        })}
+      </TransitionGroup>
+    </div>
   );
 });
 
