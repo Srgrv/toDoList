@@ -1,5 +1,6 @@
 .wrapper {
   overflow-y: auto;
   overflow-x: hidden;
-  height: 70vh;
+  height: calc(100vh - 330px);
+  /* border: 2px solid white; */
 }
