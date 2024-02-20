@@ -71,6 +71,8 @@ h1 {
 
 .btnArea {
   margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .secondaryBtn {
@@ -79,8 +81,9 @@ h1 {
   border-radius: 0px;
   border: none;
   padding: 10px;
-  /* width: fit-content; */
+  width: 49.5%;
   cursor: pointer;
+  border-radius: 5px;
 }
 
 .btnArea .active {
