@@ -5,7 +5,7 @@
 .pendingTodo-enter-active {
   opacity: 1;
   transform: translateX(0);
-  transition: opacity 700ms, transform 700ms;
+  transition: opacity 300ms, transform 300ms;
 }
 .pendingTodo-exit {
   opacity: 1;
@@ -15,7 +15,7 @@
   opacity: 0;
   /* transform: scale(0.9); */
   transform: translateX(600px);
-  transition: opacity 300ms, transform 700ms;
+  transition: opacity 300ms, transform 300ms;
 }
 
 .editForm-enter {
@@ -25,7 +25,7 @@
 .editForm-enter-active {
   opacity: 1;
   transform: translateX(0);
-  transition: opacity 700ms, transform 700ms;
+  transition: opacity 300ms, transform 300ms;
 }
 .editForm-exit {
   opacity: 1;
@@ -35,5 +35,5 @@
   opacity: 0;
   /* transform: scale(0.9); */
   transform: translateX(-600px);
-  transition: opacity 300ms, transform 700ms;
+  transition: opacity 300ms, transform 300ms;
 }
