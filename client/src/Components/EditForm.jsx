@@ -23,24 +23,26 @@ const EditForm = ({ cancel, title, description, todoId }) => {
   return (
     <div className={style.todoInput}>
       <div className={style.todoInputItem}>
-        <label>Title:</label>
-        <input
-          type="text"
-          value={titleInput}
-          onChange={(e) => setTitleInput(e.target.value)}
-          placeholder="What's the title of your To Do?"
-        />
+        <div>
+          <label>Title:</label>
+          <input
+            type="text"
+            value={titleInput}
+            onChange={(e) => setTitleInput(e.target.value)}
+            placeholder="What's the title of your To Do?"
+          />
+        </div>
+        <div>
+          <label>Description:</label>
+          <input
+            type="text"
+            value={descriptionInput}
+            onChange={(e) => setDescriptionInput(e.target.value)}
+            placeholder="What's the description of your To Do?"
+          />
+        </div>
       </div>
-      <div className={style.todoInputItem}>
-        <label>Description:</label>
-        <input
-          type="text"
-          value={descriptionInput}
-          onChange={(e) => setDescriptionInput(e.target.value)}
-          placeholder="What's the description of your To Do?"
-        />
-      </div>
-      <div className={style.todoInputItem}>
+      <div className={style.todoInputButton}>
         <button
           className={`${style.primaryBtn} ${style.addBtn}`}
           type="button"
@@ -48,8 +50,6 @@ const EditForm = ({ cancel, title, description, todoId }) => {
         >
           Edit
         </button>
-      </div>
-      <div className={style.todoInputItem}>
         <button
           className={`${style.primaryBtn} ${style.cancelBtn}`}
           type="button"
@@ -58,6 +58,7 @@ const EditForm = ({ cancel, title, description, todoId }) => {
           Cancel
         </button>
       </div>
+      {/* <div className={style.todoInputItem}></div> */}
     </div>
   );
 };

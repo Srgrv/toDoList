@@ -3,17 +3,33 @@
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid rgb(77, 77, 77);
-  margin-bottom: 25px;
+  margin-bottom: 10px;
   box-shadow: 0px 2px 4px rgb(39, 38, 38);
   background-color: #414040;
   padding: 10px;
-  padding-bottom: 25px;
+  /* padding-bottom: 25px; */
 }
 
 .todoInputItem {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 74%;
+}
+
+.todoInputItem div {
+  width: 49%;
+  display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.todoInputButton {
+  display: flex;
+  justify-content: space-between;
+  width: 24%;
+  /* flex: 1; */
+  height: 65px;
 }
 
 .todoInputItem label {
@@ -23,8 +39,12 @@
 
 .todoInputItem input {
   border: none;
+  border-radius: 5px;
   padding: 8px;
   width: 100%;
+  outline: none;
+  border: none;
+  box-sizing: border-box;
 }
 
 .todoInputItem input:focus {
@@ -33,11 +53,11 @@
 
 .primaryBtn {
   color: white;
-  border-radius: 0px;
+  border-radius: 5px;
   border: none;
-  margin-top: 27px;
-  padding: 10px;
-  width: 70px;
+  /* margin-top: 27px; */
+  /* padding: 10px; */
+  width: 48%;
   cursor: pointer;
 }
 
@@ -63,19 +83,35 @@
     width: calc(100% - 20px);
   }
   .todoInputItem {
+    flex-direction: column;
     width: 100%;
   }
-  .todoInputItem input {
-    /* width: calc(100% - 20px); */
+
+  .todoInputItem div {
     width: 100%;
-    outline: none;
-    border: none;
-    box-sizing: border-box;
+  }
+
+  .todoInputItem div:last-child {
+    margin-bottom: 7px;
+  }
+
+  .todoInputItem label {
+    margin-bottom: 5px;
+  }
+
+  .todoInputItem input {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+  .todoInputButton {
+    width: 100%;
+    height: 31px;
   }
 
   .addBtn,
   .primaryBtn {
-    width: 100%;
+    width: 49%;
     border-radius: 4px;
   }
 }
