@@ -1,8 +1,14 @@
 .wrapper {
-  border: 2px solid white;
+  /* border: 2px solid white; */
   overflow-y: auto;
   overflow-x: hidden;
   height: calc(100vh - 260px);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.transitionGroup {
+  width: 100%;
 }
 
 @media screen and (max-width: 766px) {

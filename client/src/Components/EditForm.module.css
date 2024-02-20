@@ -24,7 +24,7 @@
 .todoInputItem input {
   border: none;
   padding: 8px;
-  width: 230px;
+  width: 100%;
 }
 
 .todoInputItem input:focus {
@@ -59,15 +59,23 @@
 
 @media screen and (max-width: 766px) {
   .todoInput {
-    width: 100%;
     flex-direction: column;
+    width: calc(100% - 20px);
   }
   .todoInputItem {
     width: 100%;
-    box-sizing: border-box;
   }
   .todoInputItem input {
+    /* width: calc(100% - 20px); */
     width: 100%;
-    /* box-sizing: border-box; */
+    outline: none;
+    border: none;
+    box-sizing: border-box;
+  }
+
+  .addBtn,
+  .primaryBtn {
+    width: 100%;
+    border-radius: 4px;
   }
 }

@@ -42,35 +42,17 @@ const ListOfPendingTodos = React.memo(() => {
 
   return (
     <div className={classes.wrapper}>
-      <TransitionGroup component="div">
+      <TransitionGroup className={classes.transitionGroup}>
         {pendingTodos.map((item) => {
           if (editTodo === item._id) {
             return (
-              <CSSTransition
-                // classNames={"pendingTodo"}
-                classNames={"editForm"}
-                nodeRef={nodeRef}
-                in={Boolean(editTodo)}
-                // key={item._id}
-                key={editTodo}
-                timeout={600}
-                mountOnEnter
-                unmountOnExit
-                // onEnter={() => console.log("onEnter")}
-                // onEntered={() => console.log("onEntered")}
-                // onEntering={() => console.log("onEntering")}
-                // onExit={() => console.log("onExit")}
-                // onExited={() => console.log("onExited")}
-                // onExiting={() => console.log("onExiting")}
-              >
-                <EditForm
-                  key={item._id}
-                  cancel={() => dispatch(SET_EDIT_TODO(null))}
-                  todoId={item._id}
-                  title={item.title}
-                  description={item.description}
-                />
-              </CSSTransition>
+              <EditForm
+                key={item._id}
+                cancel={() => dispatch(SET_EDIT_TODO(null))}
+                todoId={item._id}
+                title={item.title}
+                description={item.description}
+              />
             );
           } else {
             return (
