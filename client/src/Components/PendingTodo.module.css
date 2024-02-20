@@ -5,6 +5,10 @@
   margin-bottom: 10px;
 }
 
+.todoListItem:last-child {
+  margin-bottom: 0px;
+}
+
 .todoListItem_wrapper {
   display: flex;
   justify-content: space-between;
