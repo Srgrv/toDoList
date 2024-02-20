@@ -3,17 +3,14 @@
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid rgb(77, 77, 77);
-
   margin-bottom: 25px;
   box-shadow: 0px 2px 4px rgb(39, 38, 38);
   background-color: #414040;
-  /* margin-bottom: 10px; */
   padding: 10px;
   padding-bottom: 25px;
 }
 
 .todoInputItem {
-  /* margin-right: 20px; */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -58,4 +55,19 @@
 
 .cancelBtn:hover {
   background-color: rgb(179, 92, 34);
+}
+
+@media screen and (max-width: 766px) {
+  .todoInput {
+    width: 100%;
+    flex-direction: column;
+  }
+  .todoInputItem {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .todoInputItem input {
+    width: 100%;
+    /* box-sizing: border-box; */
+  }
 }
