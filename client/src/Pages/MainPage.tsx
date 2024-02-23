@@ -3,7 +3,7 @@ import React from "react";
 //components
 import List from "../Components/List";
 
-const MainPage = () => {
+const MainPage: React.FC = () => {
   return (
     <div
       style={{
