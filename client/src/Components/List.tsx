@@ -24,17 +24,10 @@ const List = () => {
     [isCompletedScreen]
   );
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
 
-  // const [isAddingTodo, setIsAddingTodo] = useState(false);
-
-  const addNewTodo = (title, description) => {
-    // setIsAddingTodo(true);
-
-    // setTimeout(() => {
-    //   setIsAddingTodo(true);
-    // }, 400);
+  const addNewTodo = (title: string, description: string) => {
     if (title && description) {
       dispatch(createTodo({ title, description }));
       setTitle("");
