@@ -1,126 +1,280 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "../../utils/axios";
 
-export const getPendingTodos = createAsyncThunk(
-  "toDo/getPendingTodos",
-  async () => {
-    try {
-      const { data } = await axios.get(
-        "https://mern-todo-1huw.onrender.com/todos/getPendingTodos"
-      );
-      return data;
-    } catch (error) {
-      console.log(
-        `Произошла ошибка при получении задач, находящихся в ожидании, ошибка: ${error}`
-      );
-    }
-  }
-);
+interface IProps {
+  title: string;
+  description: string;
+}
 
-export const GET_COMPLETED_TODOS = createAsyncThunk(
-  "toDo/GET_COMPLETED_TODOS",
-  async () => {
-    try {
-      const { data } = await axios.get(
-        "https://mern-todo-1huw.onrender.com/todos/getCompletedTodos"
-      );
-      return data;
-    } catch (error) {
-      console.log(
-        `Произошла ошибка при получении выполненных, ошибка: ${error}`
-      );
-    }
-  }
-);
+interface ITodo extends IProps {
+  _id: string;
+  checked: boolean;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
 
-export const createTodo = createAsyncThunk(
-  "toDo/createTodo",
-  async ({ title, description }) => {
+interface IPendingTodo extends ITodo {
+  status: "ожидает выполнения";
+}
+
+interface ICompletedTodo extends ITodo {
+  status: "выполнен";
+}
+
+interface IResponse {
+  message: string;
+}
+
+interface ISuccessResponseWithPendingTodos extends IResponse {
+  todos: IPendingTodo[];
+}
+
+interface ISuccessResponseWithCompletedTodos extends IResponse {
+  todos: ICompletedTodo[];
+}
+
+interface ISuccessResponseWithCompleteTodo extends IResponse {
+  todo: ICompletedTodo;
+}
+
+interface ISuccessResponseWithPendingTodo extends IResponse {
+  todo: IPendingTodo;
+}
+
+type TBackendResponseWithPendingTodo =
+  | ISuccessResponseWithPendingTodo
+  | ErrorResponse;
+
+type TBackendResponseWithCompleteTodo =
+  | ISuccessResponseWithCompleteTodo
+  | ErrorResponse;
+
+interface ErrorResponse extends IResponse {
+  error: string;
+}
+
+type TBackendResponseWithPendingTodos =
+  | ISuccessResponseWithPendingTodos
+  | ErrorResponse;
+
+type TBackendResponseWithCompletedTodos =
+  | ISuccessResponseWithCompletedTodos
+  | ErrorResponse;
+
+export const getPendingTodos = createAsyncThunk<
+  TBackendResponseWithPendingTodos,
+  undefined,
+  { rejectValue: ErrorResponse }
+>("toDo/getPendingTodos", async (_, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.get<TBackendResponseWithPendingTodos>(
+      "https://mern-todo-1huw.onrender.com/todos/getPendingTodos"
+    );
+
+    if ("error" in data) {
+      return rejectWithValue(data);
+    } else {
+      return data;
+    }
+  } catch (error) {
+    console.log(
+      `Произошла ошибка при получении задач, находящихся в ожидании, ошибка: ${error.message}`
+    );
+
+    return rejectWithValue({
+      error: "Произошла ошибка Axios",
+      message: error.message,
+    });
+  }
+});
+
+//--------------------------------------------------------------------------------getCompletedTodos
+
+export const GET_COMPLETED_TODOS = createAsyncThunk<
+  TBackendResponseWithCompletedTodos,
+  undefined,
+  { rejectValue: ErrorResponse }
+>("toDo/GET_COMPLETED_TODOS", async (_, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.get<TBackendResponseWithCompletedTodos>(
+      // нужно добавить тип возвращаемого объекта
+      "https://mern-todo-1huw.onrender.com/todos/getCompletedTodos"
+    );
+
+    if ("error" in data) {
+      return rejectWithValue(data);
+    } else {
+      return data;
+    }
+  } catch (error) {
+    console.log(
+      `Произошла ошибка при получении выполненных, ошибка: ${error.message}`
+    );
+    return rejectWithValue({
+      error: "Произошла ошибка Axios",
+      message: error.message,
+    });
+  }
+});
+
+//----------------------------------------------------------------------------createTodo
+
+interface ISuccessResponseWithNewTodo extends IResponse {
+  newToDo: IPendingTodo;
+}
+
+export const createTodo = createAsyncThunk<
+  ISuccessResponseWithNewTodo,
+  IProps,
+  { rejectValue: ErrorResponse }
+>("toDo/createTodo", async ({ title, description }, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.post<ISuccessResponseWithNewTodo>(
+      "https://mern-todo-1huw.onrender.com/todos/createToDo",
+      {
+        title,
+        description,
+      }
+    );
+
+    return data;
+  } catch (error) {
+    console.log(`Произошла ошибка при создании задачи`);
+    return rejectWithValue({
+      message: error.message,
+      error: "Произошла ошибка Axios",
+    });
+  }
+});
+
+//---------------------------------------------------------------------------------updateTodo
+interface IPropsUpdateTodo extends IProps {
+  todoId: string;
+}
+
+interface IUpdateTodoBackendResponse {
+  todo: IPendingTodo;
+  message: string;
+}
+
+export const UPDATE_TODO = createAsyncThunk<
+  IUpdateTodoBackendResponse,
+  IPropsUpdateTodo,
+  { rejectValue: ErrorResponse }
+>(
+  "UPDATE_TODO/updateTodo",
+  async ({ title, description, todoId }, { rejectWithValue }) => {
+    debugger;
     try {
-      const { data } = await axios.post(
-        "https://mern-todo-1huw.onrender.com/todos/createToDo",
+      const { data } = await axios.put<IUpdateTodoBackendResponse>(
+        "https://mern-todo-1huw.onrender.com/todos/updateTodo",
         {
           title,
           description,
-        }
-      );
-      return data;
-    } catch (error) {
-      console.log(`Произошла ошибка при создании задачи`);
-    }
-  }
-);
-
-export const UPDATE_TODO = createAsyncThunk(
-  "UPDATE_TODO/updateTodo",
-  async ({ titleInput, descriptionInput, todoId }) => {
-    debugger;
-    try {
-      const { data } = await axios.put(
-        "https://mern-todo-1huw.onrender.com/todos/updateTodo",
-        {
-          titleInput,
-          descriptionInput,
           todoId,
         }
       );
       return data;
     } catch (error) {
       console.log(`Произошла ошибка при обновлении задачи`);
+      return rejectWithValue({
+        message: error.message,
+        error: "Произошла ошибка Axios",
+      });
     }
   }
 );
 
-export const REMOVE_TODO = createAsyncThunk(
-  "toDo/REMOVE_TODO",
-  async (todoId) => {
-    try {
-      const { data } = await axios.delete(
-        `https://mern-todo-1huw.onrender.com/todos/removeTodo/${todoId}`
-      );
+//----------------------------------------------------------------------------------removeTodo
+interface ISuccesResponseFromDeleteTodo extends IResponse {
+  todoId: IPendingTodo;
+}
+
+type TBackendResponseFromDeleteTodo =
+  | ISuccesResponseFromDeleteTodo
+  | ErrorResponse;
+
+export const REMOVE_TODO = createAsyncThunk<
+  ISuccesResponseFromDeleteTodo,
+  string,
+  { rejectValue: ErrorResponse }
+>("toDo/REMOVE_TODO", async (todoId, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.delete<TBackendResponseFromDeleteTodo>(
+      `https://mern-todo-1huw.onrender.com/todos/removeTodo/${todoId}`
+    );
+
+    if ("error" in data) {
+      return rejectWithValue(data);
+    } else {
       return data;
-    } catch (error) {
-      console.log(`Произошла ошибка при запросе на удаление: ${error}`);
     }
+  } catch (error) {
+    console.log(`Произошла ошибка при запросе на удаление: ${error}`);
+    return rejectWithValue({
+      message: error.message,
+      error: "Произошла ошибка Axios",
+    });
   }
-);
+});
 
-export const COMPLETE_TODO = createAsyncThunk(
-  "toDo/COMPLETE_TODO",
-  async (todoId) => {
-    try {
-      const { data } = await axios.put(
-        "https://mern-todo-1huw.onrender.com/todos/completeTodo",
-        { todoId }
-      );
-      return data;
-    } catch (error) {
-      console.log(`Произошла ошибка при завершении задачи: ${error}`);
-    }
+export const COMPLETE_TODO = createAsyncThunk<
+  TBackendResponseWithCompleteTodo,
+  string,
+  { rejectValue: ErrorResponse }
+>("toDo/COMPLETE_TODO", async (todoId, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.put(
+      "https://mern-todo-1huw.onrender.com/todos/completeTodo",
+      { todoId }
+    );
+
+    return data;
+  } catch (error) {
+    console.log(`Произошла ошибка при завершении задачи: ${error}`);
+    return rejectWithValue({
+      message: error.message,
+      error: "Произошла ошибка Axios",
+    });
   }
-);
+});
 
-export const INCOMPLETE_TODO = createAsyncThunk(
-  "toDo/INCOMPLETE_TODO",
-  async (todoId) => {
-    try {
-      const { data } = await axios.put(
-        "https://mern-todo-1huw.onrender.com/todos/incompleteTodo",
-        { todoId }
-      );
-      return data;
-    } catch (error) {
-      console.log(
-        `Произошла ошибка обновления статуса на "ожидает выполнения": ${error}`
-      );
-    }
+export const INCOMPLETE_TODO = createAsyncThunk<
+  TBackendResponseWithPendingTodo,
+  string,
+  { rejectValue: ErrorResponse }
+>("toDo/INCOMPLETE_TODO", async (todoId, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.put<TBackendResponseWithPendingTodo>(
+      "https://mern-todo-1huw.onrender.com/todos/incompleteTodo",
+      { todoId }
+    );
+    return data;
+  } catch (error) {
+    console.log(
+      `Произошла ошибка обновления статуса на "ожидает выполнения": ${error}`
+    );
+    return rejectWithValue({
+      message: error.message,
+      error: "Произошла ошибка Axios",
+    });
   }
-);
+});
 
-const initialState = {
+interface IInitialState {
+  isCompletedScreen: boolean;
+  pendingTodos: IPendingTodo[]; // Замените 'any' на конкретный тип, если это применимо
+  // inProcessTodos: any[]; // Замените 'any' на конкретный тип, если это применимо
+  completedTodos: ICompletedTodo[]; // Замените 'any' на конкретный тип, если это применимо
+  isLoading: boolean;
+  message: string | null; // Предполагается, что сообщение может быть строкой или null
+}
+
+const initialState: IInitialState = {
   isCompletedScreen: false,
   pendingTodos: [],
-  inProcessTodos: [],
+  // inProcessTodos: [],
   completedTodos: [],
   isLoading: false,
   message: null,
@@ -130,7 +284,8 @@ const toDoSlice = createSlice({
   name: "toDo",
   initialState,
   reducers: {
-    TOGGLE_IS_COMPLETE_SCREEN: (state, action) => {
+    TOGGLE_IS_COMPLETE_SCREEN: (state, action: PayloadAction<boolean>) => {
+      // Добавил тип для action
       state.isCompletedScreen = action.payload;
     },
   },
@@ -140,49 +295,68 @@ const toDoSlice = createSlice({
       state.isLoading = true;
     });
     build.addCase(getPendingTodos.fulfilled, (state, action) => {
-      state.pendingTodos = action.payload.todos;
+      const payload = action.payload as ISuccessResponseWithPendingTodos;
 
-      // const _oldPendingTodos = state.pendingTodos;
-      // const _newPendingTodos = action.payload.todos;
+      if (payload.todos) {
+        const newTodos = payload.todos.filter((newTodo) =>
+          state.pendingTodos.every((oldTodo) => oldTodo._id !== newTodo._id)
+        );
 
-      const newPendingTodos = state.pendingTodos.filter(
-        (newTodo) =>
-          !state.pendingTodos.some((oldTodo) => oldTodo._id === newTodo._id)
-      );
-      state.pendingTodos.unshift(...newPendingTodos);
+        state.pendingTodos = [...newTodos, ...state.pendingTodos];
+      }
+
+      // if (payload.todos) {
+      //   state.pendingTodos = payload.todos;
+      //   const newPendingTodos = state.pendingTodos.filter(
+      //     (newTodo) =>
+      //       !state.pendingTodos.some((oldTodo) => oldTodo._id === newTodo._id)
+      //   );
+      //   state.pendingTodos.unshift(...newPendingTodos);
+      // }
 
       state.message = action.payload.message;
       state.isLoading = false;
     });
     build.addCase(getPendingTodos.rejected, (state, action) => {
+      const payload = action.payload as ErrorResponse;
       state.isLoading = true;
-      state.message = action.payload.message;
+      state.message = payload.message;
     });
     //-----------------------------------------------------------GET_COMPLETED_TODOS
     build.addCase(GET_COMPLETED_TODOS.pending, (state, action) => {
       state.isLoading = true;
     });
     build.addCase(GET_COMPLETED_TODOS.fulfilled, (state, action) => {
-      state.completedTodos = action.payload.todos;
+      const payload = action.payload as ISuccessResponseWithCompletedTodos;
+
+      if (payload.todos) {
+        const todos = payload.todos as ICompletedTodo[];
+        state.completedTodos = todos;
+      }
+
       state.message = action.payload.message;
       state.isLoading = false;
     });
     build.addCase(GET_COMPLETED_TODOS.rejected, (state, action) => {
+      const payload = action.payload as ErrorResponse;
       state.isLoading = true;
-      state.message = action.payload.message;
+      state.message = payload.message;
     });
     //-----------------------------------------------------------createTodo
     build.addCase(createTodo.pending, (state, action) => {
       state.isLoading = true;
     });
     build.addCase(createTodo.fulfilled, (state, action) => {
+      const payload = action.payload as ISuccessResponseWithNewTodo;
       state.pendingTodos.unshift(action.payload.newToDo);
       state.message = action.payload.message;
       state.isLoading = false;
     });
     build.addCase(createTodo.rejected, (state, action) => {
       state.isLoading = true;
-      state.message = action.payload.message;
+      const payload = action.payload as ErrorResponse;
+
+      state.message = payload.message;
     });
     //-----------------------------------------------------------removeTodo
     build.addCase(REMOVE_TODO.pending, (state) => {
@@ -190,24 +364,26 @@ const toDoSlice = createSlice({
     });
     build.addCase(REMOVE_TODO.fulfilled, (state, action) => {
       state.message = action.payload.message;
+      const payload = action.payload as ISuccesResponseFromDeleteTodo;
+
       state.completedTodos = state.completedTodos.filter(
-        (todo) => todo._id !== action.payload.todoId
+        (todo) => todo._id !== payload.todoId._id
       );
       state.pendingTodos = state.pendingTodos.filter(
-        (todo) => todo._id !== action.payload.todoId
+        (todo) => todo._id !== payload.todoId._id
       );
       state.isLoading = false;
     });
     build.addCase(REMOVE_TODO.rejected, (state, action) => {
       state.isLoading = true;
-      state.message = action.payload.message;
+      const payload = action.payload as ErrorResponse;
+      state.message = payload.message;
     });
     //-----------------------------------------------------------updateTodo
     build.addCase(UPDATE_TODO.pending, (state) => {
       state.isLoading = true;
     });
     build.addCase(UPDATE_TODO.fulfilled, (state, action) => {
-      debugger;
       state.pendingTodos = state.pendingTodos.map((todo) => {
         if (todo._id === action.payload.todo._id) {
           return action.payload.todo;
@@ -221,38 +397,42 @@ const toDoSlice = createSlice({
     });
     build.addCase(UPDATE_TODO.rejected, (state, action) => {
       state.isLoading = true;
-      state.message = action.payload.message;
+      const payload = action.payload as ErrorResponse;
+      state.message = payload.message;
     });
     //-----------------------------------------------------------completeTodo
     build.addCase(COMPLETE_TODO.pending, (state) => {
       state.isLoading = true;
     });
     build.addCase(COMPLETE_TODO.fulfilled, (state, action) => {
-      state.message = action.payload.message;
+      const payload = action.payload as ISuccessResponseWithCompleteTodo;
+      state.message = payload.message;
       state.pendingTodos = state.pendingTodos.filter(
-        (todo) => todo._id !== action.payload.todo._id
+        (todo) => todo._id !== payload.todo._id
       );
       state.isLoading = false;
     });
     build.addCase(COMPLETE_TODO.rejected, (state, action) => {
       state.isLoading = true;
-      state.message = action.payload.message;
+      const payload = action.payload as ErrorResponse;
+      state.message = payload.message;
     });
     //-----------------------------------------------------------INCOMPLETE_TODO
     build.addCase(INCOMPLETE_TODO.pending, (state) => {
       state.isLoading = true;
     });
     build.addCase(INCOMPLETE_TODO.fulfilled, (state, action) => {
-      debugger;
       state.message = action.payload.message;
+      const payload = action.payload as ISuccessResponseWithPendingTodo;
       state.completedTodos = state.completedTodos.filter(
-        (todo) => todo._id !== action.payload.todo._id
+        (todo) => todo._id !== payload.todo._id
       );
       state.isLoading = false;
     });
     build.addCase(INCOMPLETE_TODO.rejected, (state, action) => {
       state.isLoading = true;
-      state.message = action.payload.message;
+      const payload = action.payload as ErrorResponse;
+      state.message = payload.message;
     });
   },
 });
