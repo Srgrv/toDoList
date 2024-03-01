@@ -6,12 +6,12 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "../../utils/axios";
 
-interface IProps {
+export interface IProps {
   title: string;
   description: string;
 }
 
-interface ITodo extends IProps {
+export interface ITodo extends IProps {
   _id: string;
   checked: boolean;
   createdAt: string;
@@ -19,23 +19,23 @@ interface ITodo extends IProps {
   __v: number;
 }
 
-interface IPendingTodo extends ITodo {
+export interface IPendingTodo extends ITodo {
   status: "ожидает выполнения";
 }
 
-interface ICompletedTodo extends ITodo {
+export interface ICompletedTodo extends ITodo {
   status: "выполнен";
 }
 
-interface IResponse {
+export interface IResponse {
   message: string;
 }
 
-interface ISuccessResponseWithPendingTodos extends IResponse {
+export interface ISuccessResponseWithPendingTodos extends IResponse {
   todos: IPendingTodo[];
 }
 
-interface ISuccessResponseWithCompletedTodos extends IResponse {
+export interface ISuccessResponseWithCompletedTodos extends IResponse {
   todos: ICompletedTodo[];
 }
 
