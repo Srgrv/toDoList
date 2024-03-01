@@ -1,4 +1,9 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  PayloadAction,
+  Action,
+} from "@reduxjs/toolkit";
 import axios from "../../utils/axios";
 
 interface IProps {
@@ -317,11 +322,11 @@ const toDoSlice = createSlice({
       state.message = action.payload.message;
       state.isLoading = false;
     });
-    build.addCase(getPendingTodos.rejected, (state, action) => {
-      const payload = action.payload as ErrorResponse;
-      state.isLoading = true;
-      state.message = payload.message;
-    });
+    // build.addCase(getPendingTodos.rejected, (state, action) => {
+    //   const payload = action.payload as ErrorResponse;
+    //   state.isLoading = true;
+    //   state.message = payload.message;
+    // });
     //-----------------------------------------------------------GET_COMPLETED_TODOS
     build.addCase(GET_COMPLETED_TODOS.pending, (state, action) => {
       state.isLoading = true;
@@ -337,11 +342,11 @@ const toDoSlice = createSlice({
       state.message = action.payload.message;
       state.isLoading = false;
     });
-    build.addCase(GET_COMPLETED_TODOS.rejected, (state, action) => {
-      const payload = action.payload as ErrorResponse;
-      state.isLoading = true;
-      state.message = payload.message;
-    });
+    // build.addCase(GET_COMPLETED_TODOS.rejected, (state, action) => {
+    //   const payload = action.payload as ErrorResponse;
+    //   state.isLoading = true;
+    //   state.message = payload.message;
+    // });
     //-----------------------------------------------------------createTodo
     build.addCase(createTodo.pending, (state, action) => {
       state.isLoading = true;
@@ -352,12 +357,12 @@ const toDoSlice = createSlice({
       state.message = action.payload.message;
       state.isLoading = false;
     });
-    build.addCase(createTodo.rejected, (state, action) => {
-      state.isLoading = true;
-      const payload = action.payload as ErrorResponse;
+    // build.addCase(createTodo.rejected, (state, action) => {
+    //   state.isLoading = true;
+    //   const payload = action.payload as ErrorResponse;
 
-      state.message = payload.message;
-    });
+    //   state.message = payload.message;
+    // });
     //-----------------------------------------------------------removeTodo
     build.addCase(REMOVE_TODO.pending, (state) => {
       state.isLoading = true;
@@ -374,11 +379,11 @@ const toDoSlice = createSlice({
       );
       state.isLoading = false;
     });
-    build.addCase(REMOVE_TODO.rejected, (state, action) => {
-      state.isLoading = true;
-      const payload = action.payload as ErrorResponse;
-      state.message = payload.message;
-    });
+    // build.addCase(REMOVE_TODO.rejected, (state, action) => {
+    //   state.isLoading = true;
+    //   const payload = action.payload as ErrorResponse;
+    //   state.message = payload.message;
+    // });
     //-----------------------------------------------------------updateTodo
     build.addCase(UPDATE_TODO.pending, (state) => {
       state.isLoading = true;
@@ -395,11 +400,11 @@ const toDoSlice = createSlice({
       state.message = action.payload.message;
       state.isLoading = false;
     });
-    build.addCase(UPDATE_TODO.rejected, (state, action) => {
-      state.isLoading = true;
-      const payload = action.payload as ErrorResponse;
-      state.message = payload.message;
-    });
+    // build.addCase(UPDATE_TODO.rejected, (state, action) => {
+    //   state.isLoading = true;
+    //   const payload = action.payload as ErrorResponse;
+    //   state.message = payload.message;
+    // });
     //-----------------------------------------------------------completeTodo
     build.addCase(COMPLETE_TODO.pending, (state) => {
       state.isLoading = true;
@@ -412,11 +417,11 @@ const toDoSlice = createSlice({
       );
       state.isLoading = false;
     });
-    build.addCase(COMPLETE_TODO.rejected, (state, action) => {
-      state.isLoading = true;
-      const payload = action.payload as ErrorResponse;
-      state.message = payload.message;
-    });
+    // build.addCase(COMPLETE_TODO.rejected, (state, action) => {
+    //   state.isLoading = true;
+    //   const payload = action.payload as ErrorResponse;
+    //   state.message = payload.message;
+    // });
     //-----------------------------------------------------------INCOMPLETE_TODO
     build.addCase(INCOMPLETE_TODO.pending, (state) => {
       state.isLoading = true;
@@ -429,13 +434,22 @@ const toDoSlice = createSlice({
       );
       state.isLoading = false;
     });
-    build.addCase(INCOMPLETE_TODO.rejected, (state, action) => {
+    // build.addCase(INCOMPLETE_TODO.rejected, (state, action) => {
+    //   state.isLoading = true;
+    //   const payload = action.payload as ErrorResponse;
+    //   state.message = payload.message;
+    // });
+    build.addMatcher(isError, (state, action: PayloadAction<ErrorResponse>) => {
       state.isLoading = true;
-      const payload = action.payload as ErrorResponse;
-      state.message = payload.message;
+      // const payload = action.payload as ErrorResponse;
+      state.message = action.payload.message;
     });
   },
 });
+
+const isError = (action: Action) => {
+  return action.type.endsWith("rejected");
+};
 
 export const { TOGGLE_IS_COMPLETE_SCREEN } = toDoSlice.actions;
 export default toDoSlice.reducer;
