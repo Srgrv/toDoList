@@ -13,7 +13,8 @@ const store = configureStore({
 
 type TgetState = typeof store.getState; // представляет функцию, которая возвращает объект с определенным типом структуры
 export type RootState = ReturnType<TgetState>; // извлекаем тип возвращаемого значения функции, представленной типом TgetState
-
 //либо export type RootState = Returntype<typeof store.getState>
+
+export type AppDispatch = typeof store.dispatch;
 
 export default store;
