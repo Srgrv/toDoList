@@ -73,7 +73,7 @@ export const getPendingTodos = async (req, res) => {
     });
   } catch (error) {
     res.json({
-      error,
+      error: error.message,
       message:
         "Что-то пошло не так с получением задач, находящийхся в ожидании выполнения",
     });
@@ -105,12 +105,12 @@ export const get_completedTodos = async (req, res) => {
 //=================================================================update
 export const put_updateTodo = async (req, res) => {
   try {
-    const { titleInput, descriptionInput, todoId } = req.body;
+    const { title, description, todoId } = req.body;
 
     const todo = await toDo.findById(todoId);
 
-    todo.title = titleInput;
-    todo.description = descriptionInput;
+    todo.title = title;
+    todo.description = description;
 
     await todo.save();
 
@@ -133,21 +133,22 @@ export const put_comleteTodo = async (req, res) => {
       { new: true }
     );
 
-    (err) => {
-      if (err) {
-        res.json({
-          message: `Произошла ошибка при обновлении статуса: ${err}`,
-        });
-      } else {
-        res.json({
-          message: `Значение по умолчанию для поля status успешно изменено на "выполенено"`,
-        });
-      }
-    };
+    // (err) => {
+    //   if (err) {
+    //     res.json({
+    //       message: `Произошла ошибка при обновлении статуса: ${err}`,
+    //     });
+    //   } else {
+    //     res.json({
+    //       message: `Значение по умолчанию для поля status успешно изменено на "выполенено"`,
+    //     });
+    //   }
+    // };
 
     res.json({ todo, message: "Задача была выполнена" });
   } catch (error) {
     res.json({
+      error,
       message: `Задача не была выполнена. Ошибка на стороне сервера: ${error}`,
     });
   }
