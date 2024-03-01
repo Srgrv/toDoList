@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useDispatch } from "react-redux";
+
+import { useAppDispatch } from "../hooks/hooks";
 
 //css
 import style from "./CustomCheckbox.module.css";
@@ -8,7 +9,7 @@ import style from "./CustomCheckbox.module.css";
 import { COMPLETE_TODO, INCOMPLETE_TODO } from "../store/slices/toDoSlice";
 
 const CustomCheckbox = React.memo(({ checked, id }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const prevChecked = useRef(checked);
   const prevId = useRef(id);

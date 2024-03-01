@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../hooks/hooks";
 
 //css
 import style from "./PendingTodo.module.css";
@@ -21,7 +21,7 @@ import { REMOVE_TODO } from "../store/slices/toDoSlice";
 import CustomCheckbox from "./CustomCheckbox";
 
 const PendingTodo = React.memo((props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const prevItem = useRef(props.item);
   const prevClassName = useRef(props.className);

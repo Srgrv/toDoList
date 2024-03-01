@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../hooks/hooks";
 
 //extra-reducers
 import { UPDATE_TODO } from "../store/slices/toDoSlice";
@@ -8,7 +8,7 @@ import { UPDATE_TODO } from "../store/slices/toDoSlice";
 import style from "./EditForm.module.css";
 
 const EditForm = ({ cancel, title, description, todoId }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   // console.log(title);
 

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 //css
@@ -17,8 +18,8 @@ import { GET_COMPLETED_TODOS, REMOVE_TODO } from "../../store/slices/toDoSlice";
 import CompletedTodo from "../CompletedTodo";
 
 const ListOfCompletedTodos = () => {
-  const dispatch = useDispatch();
-  const completedTodos = useSelector((state) => state.todos.completedTodos);
+  const dispatch = useAppDispatch();
+  const completedTodos = useAppSelector((state) => state.todos.completedTodos);
 
   useEffect(() => {
     dispatch(GET_COMPLETED_TODOS());

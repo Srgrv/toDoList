@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from "react";
 import classes from "./List.module.css";
-import { useSelector, useDispatch } from "react-redux";
+
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 
 //components
 import ListOfPendingTodos from "./ListOfPendingTodos/ListOfPendingTodos";
@@ -13,9 +14,9 @@ import { TOGGLE_IS_COMPLETE_SCREEN } from "../store/slices/toDoSlice";
 import { createTodo } from "../store/slices/toDoSlice";
 
 const List = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const isCompletedScreen = useSelector(
+  const isCompletedScreen = useAppSelector(
     (state) => state.todos.isCompletedScreen
   );
 

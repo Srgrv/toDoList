@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 //hooks
@@ -20,12 +20,12 @@ import { SET_EDIT_TODO } from "../../store/slices/editTodoSlice";
 const ListOfPendingTodos = React.memo(() => {
   const { isMobile, isPhone, isTablet, isLaptop, isDesktop } = useMatchMedia();
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const nodeRef = useRef(null);
 
-  const pendingTodos = useSelector((state) => state.todos.pendingTodos);
-  const editTodo = useSelector((state) => state.editTodo.editTodoId);
+  const pendingTodos = useAppSelector((state) => state.todos.pendingTodos);
+  const editTodo = useAppSelector((state) => state.editTodo.editTodoId);
 
   useEffect(() => {
     dispatch(getPendingTodos());

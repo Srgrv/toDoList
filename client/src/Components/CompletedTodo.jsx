@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 
 //css
 import style from "./PendingTodo.module.css";
@@ -11,7 +11,7 @@ import { FaCheck } from "react-icons/fa";
 import CustomCheckbox from "./CustomCheckbox";
 
 const CompletedTodo = (props, { item, icon, checkIcon }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   return (
     <div className={style.todoListItem}>
