@@ -5,6 +5,7 @@ import {
   Action,
 } from "@reduxjs/toolkit";
 import axios from "../../utils/axios";
+import { AxiosError } from "axios";
 
 export interface IProps {
   title: string;
@@ -83,13 +84,13 @@ export const getPendingTodos = createAsyncThunk<
       return data;
     }
   } catch (error) {
+    const axiosError = error as AxiosError;
     console.log(
-      `Произошла ошибка при получении задач, находящихся в ожидании, ошибка: ${error.message}`
+      `Произошла ошибка при получении ожидающих выполнения задач, ошибка: ${axiosError.message}`
     );
-
     return rejectWithValue({
       error: "Произошла ошибка Axios",
-      message: error.message,
+      message: axiosError.message,
     });
   }
 });
@@ -113,12 +114,13 @@ export const GET_COMPLETED_TODOS = createAsyncThunk<
       return data;
     }
   } catch (error) {
+    const axiosError = error as AxiosError;
     console.log(
-      `Произошла ошибка при получении выполненных, ошибка: ${error.message}`
+      `Произошла ошибка при получении выполненных задач, ошибка: ${axiosError.message}`
     );
     return rejectWithValue({
       error: "Произошла ошибка Axios",
-      message: error.message,
+      message: axiosError.message,
     });
   }
 });
@@ -145,10 +147,12 @@ export const createTodo = createAsyncThunk<
 
     return data;
   } catch (error) {
+    const axiosError = error as AxiosError;
     console.log(`Произошла ошибка при создании задачи`);
+
     return rejectWithValue({
-      message: error.message,
       error: "Произошла ошибка Axios",
+      message: axiosError.message,
     });
   }
 });
@@ -182,9 +186,10 @@ export const UPDATE_TODO = createAsyncThunk<
       );
       return data;
     } catch (error) {
+      const axiosError = error as AxiosError;
       console.log(`Произошла ошибка при обновлении задачи`);
       return rejectWithValue({
-        message: error.message,
+        message: axiosError.message,
         error: "Произошла ошибка Axios",
       });
     }
@@ -216,9 +221,10 @@ export const REMOVE_TODO = createAsyncThunk<
       return data;
     }
   } catch (error) {
+    const axiosError = error as AxiosError;
     console.log(`Произошла ошибка при запросе на удаление: ${error}`);
     return rejectWithValue({
-      message: error.message,
+      message: axiosError.message,
       error: "Произошла ошибка Axios",
     });
   }
@@ -237,9 +243,12 @@ export const COMPLETE_TODO = createAsyncThunk<
 
     return data;
   } catch (error) {
-    console.log(`Произошла ошибка при завершении задачи: ${error}`);
+    const axiosError = error as AxiosError;
+    console.log(
+      `Произошла ошибка при завершении задачи: ${axiosError.message}`
+    );
     return rejectWithValue({
-      message: error.message,
+      message: axiosError.message,
       error: "Произошла ошибка Axios",
     });
   }
@@ -257,11 +266,13 @@ export const INCOMPLETE_TODO = createAsyncThunk<
     );
     return data;
   } catch (error) {
+    const axiosError = error as AxiosError;
+
     console.log(
-      `Произошла ошибка обновления статуса на "ожидает выполнения": ${error}`
+      `Произошла ошибка обновления статуса на "ожидает выполнения": ${axiosError.message}`
     );
     return rejectWithValue({
-      message: error.message,
+      message: axiosError.message,
       error: "Произошла ошибка Axios",
     });
   }
