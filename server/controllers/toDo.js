@@ -108,15 +108,17 @@ export const put_updateTodo = async (req, res) => {
     const { title, description, todoId } = req.body;
 
     const todo = await toDo.findById(todoId);
-
+    if (!todo) {
+      return res.json({ message: "Нет такой задачи" });
+    }
     todo.title = title;
     todo.description = description;
 
     await todo.save();
-
     res.json({ todo, message: "Задача была обновлена" });
   } catch (error) {
     res.json({
+      error,
       message: `Задача не была обновлена на стороне сервера: ${error}`,
     });
   }
@@ -183,6 +185,7 @@ export const put_incompleteTodo = async (req, res) => {
     // };
   } catch (error) {
     res.json({
+      error,
       message: `Произошла ошибка отмены задачи. Ошибка на стороне сервера: ${error}`,
     });
   }
