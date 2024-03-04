@@ -162,13 +162,13 @@ export interface IPropsUpdateTodo extends IProps {
   todoId: string;
 }
 
-interface IUpdateTodoBackendResponse {
-  todo: IPendingTodo;
-  message: string;
-}
+// interface IUpdateTodoBackendResponse {
+//   todo: IPendingTodo;
+//   message: string;
+// }
 
 export const UPDATE_TODO = createAsyncThunk<
-  IUpdateTodoBackendResponse,
+  ISuccessResponseWithPendingTodo,
   IPropsUpdateTodo,
   { rejectValue: ErrorResponse }
 >(
@@ -176,8 +176,9 @@ export const UPDATE_TODO = createAsyncThunk<
   async ({ title, description, todoId }, { rejectWithValue }) => {
     debugger;
     try {
-      const { data } = await axios.put<IUpdateTodoBackendResponse>(
+      const { data } = await axios.put<ISuccessResponseWithPendingTodo>(
         "https://mern-todo-1huw.onrender.com/todos/updateTodo",
+        // "http://localhost:3001/todos/updateTodo",
         {
           title,
           description,
@@ -198,7 +199,7 @@ export const UPDATE_TODO = createAsyncThunk<
 
 //----------------------------------------------------------------------------------removeTodo
 interface ISuccesResponseFromDeleteTodo extends IResponse {
-  todoId: IPendingTodo;
+  todoId: string;
 }
 
 type TBackendResponseFromDeleteTodo =
@@ -379,14 +380,15 @@ const toDoSlice = createSlice({
       state.isLoading = true;
     });
     build.addCase(REMOVE_TODO.fulfilled, (state, action) => {
+      debugger;
       state.message = action.payload.message;
       const payload = action.payload as ISuccesResponseFromDeleteTodo;
 
       state.completedTodos = state.completedTodos.filter(
-        (todo) => todo._id !== payload.todoId._id
+        (todo) => todo._id !== payload.todoId
       );
       state.pendingTodos = state.pendingTodos.filter(
-        (todo) => todo._id !== payload.todoId._id
+        (todo) => todo._id !== payload.todoId
       );
       state.isLoading = false;
     });
@@ -395,21 +397,25 @@ const toDoSlice = createSlice({
     //   const payload = action.payload as ErrorResponse;
     //   state.message = payload.message;
     // });
+
     //-----------------------------------------------------------updateTodo
     build.addCase(UPDATE_TODO.pending, (state) => {
       state.isLoading = true;
     });
     build.addCase(UPDATE_TODO.fulfilled, (state, action) => {
-      state.pendingTodos = state.pendingTodos.map((todo) => {
-        if (todo._id === action.payload.todo._id) {
-          return action.payload.todo;
-        } else {
-          return todo;
-        }
-      });
-
-      state.message = action.payload.message;
-      state.isLoading = false;
+      debugger;
+      const payload = action.payload as ISuccessResponseWithPendingTodo;
+      if (payload) {
+        state.pendingTodos = state.pendingTodos.map((todo) => {
+          if (todo._id === payload.todo._id) {
+            return payload.todo;
+          } else {
+            return todo;
+          }
+        });
+        state.message = payload.message;
+        state.isLoading = false;
+      }
     });
     // build.addCase(UPDATE_TODO.rejected, (state, action) => {
     //   state.isLoading = true;
