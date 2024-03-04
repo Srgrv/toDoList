@@ -37,7 +37,7 @@ const EditForm: React.FC<IProps> = (props) => {
           <label>Title:</label>
           <input
             type="text"
-            value={titleInput}
+            value={title}
             onChange={(e) => setTitleInput(e.target.value)}
             placeholder="What's the title of your To Do?"
           />
@@ -46,7 +46,7 @@ const EditForm: React.FC<IProps> = (props) => {
           <label>Description:</label>
           <input
             type="text"
-            value={descriptionInput}
+            value={description}
             onChange={(e) => setDescriptionInput(e.target.value)}
             placeholder="What's the description of your To Do?"
           />
