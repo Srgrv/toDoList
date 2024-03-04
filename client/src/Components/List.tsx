@@ -38,7 +38,7 @@ const List = () => {
     }
   };
 
-  const toggleIsCompleteScreen = (boolean) => {
+  const toggleIsCompleteScreen = (boolean: boolean) => {
     dispatch(TOGGLE_IS_COMPLETE_SCREEN(boolean));
   };
 
