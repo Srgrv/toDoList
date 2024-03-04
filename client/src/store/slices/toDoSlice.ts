@@ -154,7 +154,7 @@ export const createTodo = createAsyncThunk<
 });
 
 //---------------------------------------------------------------------------------updateTodo
-interface IPropsUpdateTodo extends IProps {
+export interface IPropsUpdateTodo extends IProps {
   todoId: string;
 }
 

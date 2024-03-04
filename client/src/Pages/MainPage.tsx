@@ -9,7 +9,6 @@ const MainPage: React.FC = () => {
       style={{
         display: "flex",
         width: "100vw",
-        // height: "calc(100vh - 50px)",
         height: "100vh",
         backgroundColor: "SlateGray",
         justifyContent: "center",

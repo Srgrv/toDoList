@@ -3,7 +3,8 @@ import { Routes, Route } from "react-router-dom";
 import React from "react";
 
 //components
-import Layout from "./Components/Layout";
+
+import Layout from "./Components/Layout.tsx";
 
 //pages
 import MainPage from "./Pages/MainPage";
